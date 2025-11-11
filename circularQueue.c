@@ -16,7 +16,7 @@ int main(){
         scanf("%d",&choice);
         switch(choice){
             case 1:printf("enter the element to insert\n");
-            scanf(" %c",&item);
+            scanf(" %c",&item);//space before char 
             insert(item);
             break;
             case 2:delete();
@@ -61,4 +61,5 @@ void display(){
         printf("%c\t",queue[f]);
         f=(f+1)%MAX;
     }
+
 }
