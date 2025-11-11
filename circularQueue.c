@@ -1,73 +1,64 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define SIZE 5
-struct queue{
-    int front,rear,count;
-    int items[SIZE];
-};
-void Insert(struct queue *,int);
-void Delete(struct queue *);
-void Display(struct queue *);
+#define MAX 5
+char queue[MAX];
+int front=0;
+int rear=-1,count=0;
+void insert(char);
+void delete();
+void display();
 int main(){
-    struct queue cq;
-    cq.front=0;
-    cq.rear=-1;
-    cq.count=0;
-    int elem,ch;
+    int choice;
+    char item;
     while(1){
-        printf("\nEnter your choice\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
-        scanf("%d",&ch);
-        switch(ch){
-            case 1:if(cq.count==SIZE){
-                printf("Queue overflow\n");
-            }
-            else{
-                printf("Enter the element to insert:\n");
-                scanf("%d",&elem);
-                Insert(&cq,elem);
-            }
+        printf("\n1.Insert an element\n2.Delete an element\n3.Display\n4.Exit\n");
+        printf("Enter your choice:\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:printf("enter the element to insert\n");
+            scanf(" %c",&item);
+            insert(item);
             break;
-            case 2:Delete(&cq);
+            case 2:delete();
             break;
-            case 3:Display(&cq);
+            case 3:display();
             break;
             case 4:exit(0);
-            break;
-            default:printf("Enter a valid choice\n");
-            break;
+            default:printf("Invalid choice.Choose again\n");
         }
     }
+    return 0;
 }
-void Insert(struct queue *cq,int elem){
-    cq->rear=(cq->rear+1)%SIZE;
-    cq->items[cq->rear]=elem;
-    cq->count++;
-    return;
-}
-void Delete(struct queue *cq){
-    if(cq->count==0){
-        printf("Queue unser flow\n");
+void insert(char item){
+    if(count==MAX){
+        printf("Queue overflow");
         return;
     }
-    int ele=cq->items[cq->front];
-    printf("Deleted element is %d\n",ele);
-    cq->front=(cq->front+1)%SIZE;
-    cq->count--;
-    return;
+    rear=(rear+1)%MAX;
+    queue[rear]=item;
+    count++;
+    printf("Insertion successfully\n");
 }
-void Display(struct queue *cq){
-    if(cq->count==0){
-        printf("Queue under flow\n");
+void delete(){
+    if(count==0){
+        printf("Queue underflow\n");
         return;
     }
-    int ele;
-    int f=cq->front;
-    printf("The elements of circular queue are:\n");
-    for(int i=0;i<cq->count;i++){
-        ele=cq->items[f];
-        printf("%d\t",ele);
-        f=(f+1)%SIZE;
+    char elem;
+    elem=queue[front];
+    printf("Deleted element is %c\n",elem);
+    front=(front+1)%MAX;
+    count--;
+}
+void display(){
+    if(count==0){
+        printf("Queue unserflow\n");
+        return;
     }
-    return;
+    int f=front;
+    printf("The elements in queue are:\n");
+    for(int i=0;i<count;i++){
+        printf("%c\t",queue[f]);
+        f=(f+1)%MAX;
+    }
 }
